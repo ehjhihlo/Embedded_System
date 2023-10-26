@@ -1,6 +1,7 @@
 from bluepy.btle import Peripheral, UUID
 from bluepy.btle import Scanner, DefaultDelegate
 from bluepy import btle
+import struct
 
 class NewDelegate(btle.DefaultDelegate):
     def __init__(self):
