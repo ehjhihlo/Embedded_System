@@ -1,6 +1,6 @@
 # 執行步驟
 1. 在Mbed Studio創建一個empty project，並刪掉原本的main.cpp
-2. 下載ble程式 [https://github.com/ARMmbed/mbed-os-example-ble]，並將BLE_GattServer_AddService的資料夾放進去empty project裡面
+2. 下載ble程式 [https://github.com/ARMmbed/mbed-os-example-ble]  ，並將BLE_GattServer_AddService的資料夾放進去empty project裡面
 3. 依照投影片修改mbed_add.json檔
 4. 在樹莓派上下載本repo
 5. 把本repo的main.cpp取代原本的main.cpp，並complie整個project
