@@ -7,8 +7,11 @@ static BSP_AUDIO_Init_t MicParams;
 static DigitalOut led(LED1);
 static EventQueue ev_queue;
 
+// DigitalIn toggle(D4);
 static DigitalOut out(D4);
 static DigitalOut out2(D3);
+
+// out = HAL_GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
 
 // Place to store final audio (alloc on the heap), here two seconds...
 static size_t TARGET_AUDIO_BUFFER_NB_SAMPLES = AUDIO_SAMPLING_FREQUENCY * 2;
@@ -19,6 +22,7 @@ static size_t TARGET_AUDIO_BUFFER_IX = 0;
 static size_t SKIP_FIRST_EVENTS = 50;
 static size_t half_transfer_events = 0;
 static size_t transfer_complete_events = 0;
+
 
 // callback that gets invoked when TARGET_AUDIO_BUFFER is full
 void target_audio_buffer_full() {
@@ -75,8 +79,8 @@ void target_audio_buffer_full() {
 void BSP_AUDIO_IN_HalfTransfer_CallBack(uint32_t Instance) {
     half_transfer_events++;
 
-    out = 1;
-    out2 = 0;
+    out = !out;
+    // out2 = 0;
     if (half_transfer_events < SKIP_FIRST_EVENTS) return;
 
     uint32_t buffer_size = PCM_BUFFER_LEN / 2; /* Half Transfer */
@@ -104,8 +108,8 @@ void BSP_AUDIO_IN_HalfTransfer_CallBack(uint32_t Instance) {
 void BSP_AUDIO_IN_TransferComplete_CallBack(uint32_t Instance) {
     transfer_complete_events++;
 
-    out = 0;
-    out2 = 1;
+    // out = 2;
+    out2 = !out2;
 
     if (transfer_complete_events < SKIP_FIRST_EVENTS) return;
 
@@ -202,3 +206,4 @@ int main() {
 
     ev_queue.dispatch_forever();
 }
+
